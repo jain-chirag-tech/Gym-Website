@@ -1,3 +1,46 @@
+<?php
+$insert = false;
+if(isset($_POST['name'])){
+    // Set connection variables
+    $server = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "gym";
+
+    // Create a database connection
+    $con = mysqli_connect($server, $username, $password, $database);
+
+    // Check for connection success
+    if(!$con){
+        die("connection to this database failed due to" . mysqli_connect_error());
+    }
+    // echo "Success connecting to the db";
+
+    // Collect post variables
+    $name = $_POST['name'];
+    $gender = $_POST['gender'];
+    $age = $_POST['age'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $sql = "INSERT INTO `gym`.`gym_data` (`name`, `age`, `gender`, `email`, `phone`) VALUES ('$name', '$age', '$gender', '$email', '$phone');";
+    // echo $sql;
+
+    // Execute the query
+    if($con->query($sql) == true){
+        // echo "Successfully inserted";
+
+        // Flag for successful insertion
+        $insert = true;
+    }
+    else{
+        echo "ERROR: $sql <br> $con->error";
+    }
+
+    // Close the database connection
+    $con->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,113 +53,6 @@
     <link rel="stylesheet" href="css/gym.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
 </head>
-<!-- <style>
-    body {
-        font-family: 'Ubuntu', sans-serif;
-        color: white;
-        background: url('https://cdn.pixabay.com/photo/2016/11/19/12/43/barbell-1839086_960_720.jpg');
-        padding: 0px;
-        margin: 0px;
-
-    }
-
-    .left {
-        display: inline-block;
-        position: absolute;
-        top: 0px;
-        left: 20px;
-    }
-
-    .left img {
-        align-items: center;
-        width: 80px;
-    }
-
-    .left div {
-        font-family: 'Ubuntu', sans-serif;
-        line-height: 19px;
-        font-size: 18px;
-        text-align: center;
-    }
-
-    .mid {
-        display: block;
-        margin: 12px auto;
-        width: 40%;
-    }
-
-    .navbar li {
-        display: inline-block;
-    }
-
-    .navbar a {
-        text-decoration: none;
-        color: white;
-        padding: 24px 13px;
-    }
-
-    .navbar li a:hover {
-        color: gray;
-        text-decoration: underline;
-    }
-
-    .navbar li a:hover,
-    .navbar li a.active {
-        text-decoration: underline;
-        color: grey;
-    }
-
-    .right {
-        display: inline-block;
-        position: absolute;
-        top: 0px;
-        right: 24px;
-        padding: 18px 12px;
-    }
-
-    .btn {
-        font-family: 'Ubuntu', sans-serif;
-        background-color: black;
-        color: white;
-        cursor: pointer;
-    }
-
-    .btn:hover {
-        color: grey;
-    }
-
-    .container {
-        border: 1px solid rgb(209, 162, 162);
-        width: 30%;
-        margin: 158px 817px;
-        padding: 7px 12px;
-    }
-
-    h3 {
-        text-align: center;
-        font-size: 29px;
-    }
-
-    .form-group input {
-        text-align: center;
-        font-size: 13px;
-        display: block;
-        border: 2px solid black;
-        border-radius: 15px;
-        margin: 4px 108px;
-        padding: 2px 2px;
-        width: 45%;
-    }
-
-    .container button {
-
-        display: block;
-        width: 48%;
-        margin: 8px auto;
-
-    }
-</style> -->
-
 <body>
     <header class="header">
         <div class="left">
